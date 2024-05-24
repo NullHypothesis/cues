@@ -21,6 +21,21 @@ func TestFewElems(t *testing.T) {
 	assert.Equal(t, uint64(bufSize), c.Estimate())
 }
 
+func TestManyElems(t *testing.T) {
+	var (
+		bufSize = 128
+		c       = New[int](bufSize)
+	)
+
+	for i := 0; i < 1_000; i++ {
+		c.Feed(i)
+	}
+	e := c.Estimate()
+	// Make sure that the estimate is within a reasonable range.
+	assert.Greater(t, e, uint64(500))
+	assert.Less(t, e, uint64(1_500))
+}
+
 func BenchmarkCues(b *testing.B) {
 	c := New[int](1_024)
 	for i := 0; i < b.N; i++ {
