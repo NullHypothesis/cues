@@ -1,7 +1,7 @@
 package cues
 
 import (
-	"math/rand"
+	"math/rand/v2"
 )
 
 const (
